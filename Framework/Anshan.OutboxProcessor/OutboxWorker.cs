@@ -1,30 +1,35 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Anshan.OutboxProcessor.DataStore;
-using Anshan.OutboxProcessor.EventBus;
 using Anshan.OutboxProcessor.Serialization;
 using Anshan.OutboxProcessor.Types;
 using Anshan.Persistence.Outbox;
 using Coravel.Invocable;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 
 namespace Anshan.OutboxProcessor
 {
-    public class OutboxWorker : IInvocable, IDataStoreChangeTracker
+    public class OutboxWorker : IInvocable
     {
-        private readonly IEventBus _eventBus;
         private readonly ILogger<OutboxWorker> _logger;
-        private readonly IDataStore _store;
         private readonly IEventTypeResolver _typeResolver;
+        private readonly IOutboxRepository _outboxRepository;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public OutboxWorker(IEventTypeResolver typeResolver, ILogger<OutboxWorker> logger, IEventBus eventBus,
-                            IDataStore store)
+        public OutboxWorker(IEventTypeResolver typeResolver, ILogger<OutboxWorker> logger,
+            IOutboxRepository outboxRepository, IPublishEndpoint publishEndpoint)
         {
             _typeResolver = typeResolver;
             _logger = logger;
-            _eventBus = eventBus;
-            _store = store;
-            _store.SetSubscriber(this);
+            _outboxRepository = outboxRepository;
+            _publishEndpoint = publishEndpoint;
+        }
+
+        public async Task Invoke()
+        {
+            await SubscribeForChanges();
         }
 
         public void ChangeDetected(IEnumerable<OutboxItem> items)
@@ -32,7 +37,7 @@ namespace Anshan.OutboxProcessor
             foreach (var item in items)
             {
                 var type = _typeResolver.GetType(item.EventType);
-                
+
                 if (type is null)
                 {
                     _logger.LogError($"Type of '{item.EventType}' not found in event types");
@@ -40,15 +45,21 @@ namespace Anshan.OutboxProcessor
                 }
 
                 var eventToPublish = EventDeserializer.Deserialize(type, item.EventBody);
-                _eventBus.Publish(eventToPublish);
+                _publishEndpoint.Publish(eventToPublish);
+
                 _logger.LogInformation($"Event '{item.EventType}-{item.EventId}' Published on bus.");
             }
         }
-        
-        public async Task Invoke()
+
+        private async Task SubscribeForChanges()
         {
-            await _eventBus.Start();
-            await _store.SubscribeForChanges();
+            var items = await _outboxRepository.GetOutboxItemsAsync();
+            if (items.Any())
+            {
+                _logger.LogInformation($"{items.Count} Events found in outbox");
+                ChangeDetected(items);
+                await _outboxRepository.UpdateOutboxItemsAsync(items);
+            }
         }
     }
 }

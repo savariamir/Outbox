@@ -9,6 +9,7 @@
     <ItemGroup>
         <PackageReference Include="Coravel" Version="4.2.1" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+        <PackageReference Include="MassTransit.Azure.ServiceBus.Core" Version="8.0.16" />
     </ItemGroup>
     
 

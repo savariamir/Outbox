@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Ordering.Config;
 using Ordering.Domain;
@@ -18,7 +19,6 @@ builder.Services.AddDbContext<OrderingDBContext>(options =>
 
 builder.Services.AddBus();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,5 +1,6 @@
 using System.Data;
 using Anshan.OutboxProcessor.Setup;
+using MassTransit;
 using Microsoft.Data.SqlClient;
 using Ordering.Domain;
 
@@ -27,8 +28,18 @@ public class Startup
         services.AddOutboxProcessor(Configuration, config =>
         {
             config.ReadFromSqlServer()
-                .PublishWithMassTransit()
                 .UseEventsInAssemblies(typeof(OrderPlaced).Assembly);
+        });
+
+
+        services.AddMassTransit(x =>
+        {
+            x.SetKebabCaseEndpointNameFormatter();
+
+            x.UsingAzureServiceBus((_, cfg) =>
+            {
+                cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
+            });
         });
 
         services.AddWorkers();

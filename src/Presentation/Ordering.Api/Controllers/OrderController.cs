@@ -19,7 +19,6 @@ public class OrderController : ControllerBase
     public async Task<IActionResult> PlaceOrder(PlaceOrderCommand command)
     {
         await _commandMediator.SendAsync(command);
-
         return Ok();
     }
 }

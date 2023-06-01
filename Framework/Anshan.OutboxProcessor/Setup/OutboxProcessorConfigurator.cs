@@ -1,41 +1,23 @@
 using System.Reflection;
 using Anshan.OutboxProcessor.DataStore;
 using Anshan.OutboxProcessor.DataStore.Sql;
-using Anshan.OutboxProcessor.EventBus;
-using Anshan.OutboxProcessor.EventBus.MassTransit;
 using Anshan.OutboxProcessor.Types;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Anshan.OutboxProcessor.Setup
 {
     public class OutboxProcessorConfigurator
     {
-        private readonly IConfiguration _configuration;
         private readonly IServiceCollection _services;
 
-        public OutboxProcessorConfigurator(IServiceCollection serviceCollection, IConfiguration configuration)
+        public OutboxProcessorConfigurator(IServiceCollection serviceCollection)
         {
             _services = serviceCollection;
-            _configuration = configuration;
         }
 
         public OutboxProcessorConfigurator ReadFromSqlServer()
         {
-            _services.AddTransient<IDataStore, SqlDataStore>();
-            return this;
-        }
-
-        public OutboxProcessorConfigurator ReadFromMongo()
-        {
-            //TODO
-            return this;
-        }
-
-        public OutboxProcessorConfigurator PublishWithMassTransit()
-        {
-            _services.AddSingleton<IEventBus, MassTransitBusAdapter>();
-            _services.Configure<MassTransitConfig>(_configuration.GetSection("MassTransitConfig"));
+            _services.AddTransient<IOutboxRepository, SqlOutboxRepository>();
             return this;
         }
 

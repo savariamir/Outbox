@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="LiteBus.Commands.Abstractions" Version="0.14.0" />
+        <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
         <PackageReference Include="LiteBus.Extensions.MicrosoftDependencyInjection" Version="0.14.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">

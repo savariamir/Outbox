@@ -18,7 +18,7 @@ public class PlaceOrderHandler: ICommandHandler<PlaceOrderCommand>
         var options = OrderFactory.CreateFrom(command);
 
         var order = Order.PlaceOrder(options);
-
+        
         await _repository.AddAsync(order);
     }
 }

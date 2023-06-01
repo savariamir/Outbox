@@ -9,7 +9,7 @@ namespace Anshan.OutboxProcessor.Setup
         public static void AddOutboxProcessor(this IServiceCollection services, IConfiguration configuration,
                                               Action<OutboxProcessorConfigurator> config)
         {
-            var configurator = new OutboxProcessorConfigurator(services, configuration);
+            var configurator = new OutboxProcessorConfigurator(services);
             config.Invoke(configurator);
         }
     }

@@ -6,39 +6,19 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Anshan.Persistence.Outbox;
 using Dapper;
-using Microsoft.Extensions.Logging;
 
 namespace Anshan.OutboxProcessor.DataStore.Sql
 {
-    public class SqlDataStore : IDataStore
+    public class SqlOutboxRepository : IOutboxRepository
     {
-        private readonly ILogger<OutboxWorker> _logger;
-        private IDataStoreChangeTracker _changeTracker;
         private readonly IDbConnection _connection;
 
-        public SqlDataStore(ILogger<OutboxWorker> logger, IDbConnection connection)
+        public SqlOutboxRepository(IDbConnection connection)
         {
-            _logger = logger;
             _connection = connection;
         }
 
-        public void SetSubscriber(IDataStoreChangeTracker changeTracker)
-        {
-            _changeTracker = changeTracker;
-        }
-
-        public async Task SubscribeForChanges()
-        {
-            var items = await GetOutboxItems();
-            if (items.Any())
-            {
-                _logger.LogInformation($"{items.Count} Events found in outbox");
-                _changeTracker.ChangeDetected(items);
-                await UpdateOutboxItems(items);
-            }
-        }
-
-        private async Task UpdateOutboxItems(List<OutboxItem> items)
+        public async Task UpdateOutboxItemsAsync(IEnumerable<OutboxItem> items)
         {
             using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             foreach (var item in items)
@@ -51,7 +31,7 @@ namespace Anshan.OutboxProcessor.DataStore.Sql
             transactionScope.Complete();
         }
 
-        private async Task<List<OutboxItem>> GetOutboxItems()
+        public async Task<List<OutboxItem>> GetOutboxItemsAsync()
         {
             var items = await _connection.QueryAsync<OutboxItem>("SELECT TOP (100) *  FROM [dbo].[OutboxMessages] where PublishDateTime is NULL");
 
