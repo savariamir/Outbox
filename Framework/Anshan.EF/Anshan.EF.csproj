@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <IsPackable>true</IsPackable>
+        <Title>Anshan.EF</Title>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Anshan.Core\Anshan.Core.csproj" />
+        <ProjectReference Include="..\Anshan.Domain\Anshan.Domain.csproj" />
+        <ProjectReference Include="..\Anshan.Persistence\Anshan.Persistence.csproj" />
+    </ItemGroup>
+</Project>

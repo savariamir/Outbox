@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="dapper" Version="2.0.123" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+        <PackageReference Include="PrivateSetterContractResolver" Version="2.1.0" />
+        
+        <PackageReference Include="Coravel" Version="4.2.1" />
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.16" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+        <PackageReference Include="MongoDB.Driver" Version="2.19.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Anshan.Domain\Anshan.Domain.csproj" />
+      <ProjectReference Include="..\Anshan.Persistence\Anshan.Persistence.csproj" />
+    </ItemGroup>
+</Project>

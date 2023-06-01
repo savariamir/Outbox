@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Coravel" Version="4.2.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    </ItemGroup>
+    
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Anshan.OutboxProcessor\Anshan.OutboxProcessor.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Anshan.Worker.Coravel\Anshan.Worker.Coravel.csproj" />
+      <ProjectReference Include="..\..\Domain\Ordering.Domain\Ordering.Domain.csproj" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <IsPackable>true</IsPackable>
+        <Title>Anshan.Domain</Title>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\Anshan.Core\Anshan.Core.csproj" />
+    </ItemGroup>
+</Project>
