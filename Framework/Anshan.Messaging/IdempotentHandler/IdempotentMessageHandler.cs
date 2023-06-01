@@ -2,7 +2,7 @@ using Anshan.Core;
 using Anshan.Domain;
 using MassTransit;
 
-namespace Order.Subscriber.IdempotentHandler;
+namespace Anshan.Messaging.IdempotentHandler;
 
 public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : DomainEvent
 {

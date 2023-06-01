@@ -1,4 +1,5 @@
 using Ordering.Domain;
+using Ordering.Domain.Models.Orders;
 
 namespace Ordering.Persistence.EF;
 

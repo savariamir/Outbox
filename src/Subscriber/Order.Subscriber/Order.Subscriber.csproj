@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Anshan.EF\Anshan.EF.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Anshan.Messaging\Anshan.Messaging.csproj" />
       <ProjectReference Include="..\..\Domain\Ordering.Domain\Ordering.Domain.csproj" />
       <ProjectReference Include="..\..\Infrastructure\Ordering.Persistence.EF\Ordering.Persistence.EF.csproj" />
     </ItemGroup>

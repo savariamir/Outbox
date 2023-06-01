@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Worker", "src\Work
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Subscriber", "src\Subscriber\Order.Subscriber\Order.Subscriber.csproj", "{6CD4AFEA-FA45-4261-B625-F5201E504B99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anshan.Messaging", "Framework\Anshan.Messaging\Anshan.Messaging.csproj", "{EB00569B-00EF-4E77-9444-D0C586712EDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,7 @@ Global
 		{D0396731-1D69-4FE9-AD18-44ADEBEE4026} = {938C8568-A3BD-47B5-B106-5F132486B967}
 		{5821F399-F7B7-4AE6-9195-65C035A1B7B7} = {1F2550BE-4ECE-47B6-82FC-1C59A515D353}
 		{6CD4AFEA-FA45-4261-B625-F5201E504B99} = {567981C3-8DA0-46D5-80EE-75479B109A6B}
+		{EB00569B-00EF-4E77-9444-D0C586712EDD} = {F7E7D3BE-9BD1-4C39-863A-A5C01A4EAA2D}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F80D7A58-FA59-474D-8280-36C52AC86B2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -137,5 +140,9 @@ Global
 		{6CD4AFEA-FA45-4261-B625-F5201E504B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CD4AFEA-FA45-4261-B625-F5201E504B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CD4AFEA-FA45-4261-B625-F5201E504B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB00569B-00EF-4E77-9444-D0C586712EDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB00569B-00EF-4E77-9444-D0C586712EDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB00569B-00EF-4E77-9444-D0C586712EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB00569B-00EF-4E77-9444-D0C586712EDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -2,6 +2,7 @@ using LiteBus.Commands.Extensions.MicrosoftDependencyInjection;
 using LiteBus.Messaging.Extensions.MicrosoftDependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application;
+using Ordering.Application.Orders;
 
 namespace Ordering.Config;
 

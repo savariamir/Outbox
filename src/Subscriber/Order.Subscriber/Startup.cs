@@ -1,7 +1,7 @@
 using Anshan.Core;
 using Anshan.EF;
+using Anshan.Messaging.IdempotentHandler;
 using Microsoft.EntityFrameworkCore;
-using Order.Subscriber.IdempotentHandler;
 using Ordering.Persistence.EF;
 
 namespace Order.Subscriber

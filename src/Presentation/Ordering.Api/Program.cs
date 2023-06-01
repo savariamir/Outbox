@@ -1,7 +1,6 @@
-using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Ordering.Config;
-using Ordering.Domain;
+using Ordering.Domain.Models.Orders;
 using Ordering.Persistence.EF;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +35,9 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program
+namespace Ordering.Api
 {
+    public partial class Program
+    {
+    }
 }

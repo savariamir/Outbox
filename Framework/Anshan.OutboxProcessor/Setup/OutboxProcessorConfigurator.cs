@@ -1,6 +1,5 @@
 using System.Reflection;
-using Anshan.OutboxProcessor.DataStore;
-using Anshan.OutboxProcessor.DataStore.Sql;
+using Anshan.OutboxProcessor.Repository;
 using Anshan.OutboxProcessor.Types;
 using Microsoft.Extensions.DependencyInjection;
 

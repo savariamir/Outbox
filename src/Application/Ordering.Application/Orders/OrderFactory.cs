@@ -1,7 +1,8 @@
 using Ordering.Application.Contracts;
-using Ordering.Domain;
+using Ordering.Application.Contracts.Orders;
+using Ordering.Domain.Models.Orders;
 
-namespace Ordering.Application;
+namespace Ordering.Application.Orders;
 
 public static class OrderFactory
 {

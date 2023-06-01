@@ -1,4 +1,4 @@
-namespace Ordering.Application.Contracts;
+namespace Ordering.Application.Contracts.Orders;
 
 public class OrderItemCommand
 {

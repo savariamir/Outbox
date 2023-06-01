@@ -1,6 +1,6 @@
 using Anshan.Domain;
 
-namespace Ordering.Domain;
+namespace Ordering.Domain.Models.Orders;
 
 public class Shipping : ValueObject
 {

@@ -1,4 +1,4 @@
-namespace Ordering.Domain;
+namespace Ordering.Domain.Models.Orders;
 
 public class OrderOptions
 {

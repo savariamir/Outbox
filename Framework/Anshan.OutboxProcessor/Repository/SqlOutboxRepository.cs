@@ -7,7 +7,7 @@ using System.Transactions;
 using Anshan.Persistence.Outbox;
 using Dapper;
 
-namespace Anshan.OutboxProcessor.DataStore.Sql
+namespace Anshan.OutboxProcessor.Repository
 {
     public class SqlOutboxRepository : IOutboxRepository
     {

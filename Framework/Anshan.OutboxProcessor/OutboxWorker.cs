@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Anshan.OutboxProcessor.DataStore;
+using Anshan.OutboxProcessor.Repository;
 using Anshan.OutboxProcessor.Serialization;
 using Anshan.OutboxProcessor.Types;
 using Anshan.Persistence.Outbox;

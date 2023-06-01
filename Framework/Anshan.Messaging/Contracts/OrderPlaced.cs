@@ -1,6 +1,6 @@
 using Anshan.Domain;
 
-namespace Ordering.Domain;
+namespace Anshan.Messaging.Contracts;
 
 public class OrderPlaced : DomainEvent
 {

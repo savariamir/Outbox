@@ -1,6 +1,7 @@
 using LiteBus.Commands.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Ordering.Application.Contracts;
+using Ordering.Application.Contracts.Orders;
 
 namespace Ordering.Api.Controllers;
 

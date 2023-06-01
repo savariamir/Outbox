@@ -1,8 +1,8 @@
 using System.Data;
+using Anshan.Messaging.Contracts;
 using Anshan.OutboxProcessor.Setup;
 using MassTransit;
 using Microsoft.Data.SqlClient;
-using Ordering.Domain;
 
 namespace Ordering.Worker;
 

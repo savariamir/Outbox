@@ -2,6 +2,7 @@ using System.Net;
 using AutoFixture;
 using FluentAssertions;
 using Ordering.Application.Contracts;
+using Ordering.Application.Contracts.Orders;
 using Ordering.Spec.Tasks;
 
 namespace Ordering.Spec.Features.Orders;

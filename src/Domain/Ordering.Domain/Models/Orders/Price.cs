@@ -1,7 +1,7 @@
 using Anshan.Domain;
 using Anshan.Domain.Exceptions;
 
-namespace Ordering.Domain;
+namespace Ordering.Domain.Models.Orders;
 
 public class Price : ValueObject
 {

@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Anshan.Domain\Anshan.Domain.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Anshan.Messaging\Anshan.Messaging.csproj" />
     </ItemGroup>
 
 </Project>

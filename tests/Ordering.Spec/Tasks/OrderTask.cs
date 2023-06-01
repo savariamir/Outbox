@@ -1,4 +1,5 @@
 using Ordering.Application.Contracts;
+using Ordering.Application.Contracts.Orders;
 
 namespace Ordering.Spec.Tasks;
 

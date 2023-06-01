@@ -1,4 +1,4 @@
-namespace Order.Subscriber.IdempotentHandler;
+namespace Anshan.Messaging.IdempotentHandler;
 
 public interface IDuplicateHandler
 {

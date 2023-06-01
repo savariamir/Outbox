@@ -1,6 +1,7 @@
 ﻿using Anshan.Domain;
+using Anshan.Messaging.Contracts;
 
-namespace Ordering.Domain;
+namespace Ordering.Domain.Models.Orders;
 
 public class Order : AggregateRoot<Guid>
 {

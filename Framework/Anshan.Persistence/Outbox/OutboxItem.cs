@@ -8,7 +8,6 @@ namespace Anshan.Persistence.Outbox
         public OutboxItem()
         {
             Id = Guid.NewGuid().ToString();
-            EventId = Guid.NewGuid();
             CreatedAt = DateTime.UtcNow;
         }
 

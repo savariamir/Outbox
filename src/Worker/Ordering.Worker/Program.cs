@@ -1,4 +1,4 @@
-using Ordering.Worker;
+namespace Ordering.Worker;
 
 public class Program
 {
