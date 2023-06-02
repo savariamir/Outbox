@@ -35,7 +35,7 @@ There's a well-known pattern called `Transactional Outbox` that can help you a
 
 ## Implementation
 
-![high-level.png](./docs/high-level.png)
+![high-level.png | width=100](./docs/high-level.png)
 
 ## Second problem
 
