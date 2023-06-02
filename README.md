@@ -1,10 +1,15 @@
 
 # Transactional Outbox pattern
 
-Microservice architectures are becoming increasingly popular and show promise in solving problems like scalability, maintainability, and agility, especially in large applications. But this architectural pattern also introduces challenges when it comes to data handling. In distributed applications, each service independently maintains the data it needs to operate in a dedicated service-owned datastore. To support such a scenario, you typically use a messaging solution like RabbitMQ, Kafka, or Azure Service Bus that distributes data (events) from one service via a messaging bus to other services of the application. Internal or external consumers can then subscribe to those messages and get notified of changes as soon as data is manipulated.
+Microservice architectures are gaining popularity due to their ability to address scalability, maintainability, and agility challenges, particularly in large applications. However, this architectural pattern also introduces new considerations when it comes to data handling. In distributed applications, each service maintains its own dedicated datastore, which can pose challenges in ensuring data consistency and synchronization across services.
 
+To tackle these challenges, it is common to employ a messaging solution such as RabbitMQ, Kafka, or Azure Service Bus. These messaging systems facilitate the distribution of data (events) from one service to others via a messaging bus. By leveraging this approach, services can communicate and share data efficiently, ensuring that relevant information is propagated to the necessary consumers.
 
-A well-known example in that area is an `ordering` system: when a user wants to create an order, an Ordering service receives data from a client application via a REST endpoint. It maps the payload to an internal representation of an `Order` object to validate the data. After a successful commit to the database, it publishes an `OrderPlaced` event to a message bus. Any other service interested in new orders (for example an `Inventory` or `Invoicing` service), would subscribe to `OrderPlaced` messages, process them, and store them in its own database.
+One illustrative example of this pattern is an ordering system. Let's consider a scenario where a user intends to create an order. In this case, an Ordering service receives data from a client application through a REST endpoint. The service then maps the payload to an internal representation of an Order object and performs data validation. Once the data is successfully committed to the database, the `Ordering Service` publishes an `OrderPlaced` event to the message bus.
+
+Other services within the application, such as an `Inventory` or `Invoicing` service, can subscribe to the `OrderPlaced` messages. By doing so, they become aware of newly placed orders and can process and store the relevant data in their own dedicated databases. This decentralized approach allows different services to react to events and maintain their own copies of data as needed.
+
+By employing messaging systems and event-driven architectures, microservice-based applications can efficiently distribute data and ensure that services are informed of changes in a timely manner. This enables better coordination and collaboration between services while maintaining data consistency across the application.
 
 
 ## First problem
