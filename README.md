@@ -107,3 +107,25 @@ public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : Domai
     protected abstract Task ConsumeAsync(ConsumeContext<T> context);
 }
 ```
+
+## OrderPlacedConsumer Example
+
+```csharp
+public class OrderPlacedConsumer : IdempotentMessageHandler<OrderPlaced>
+{
+    private readonly ILogger<OrderPlacedConsumer> _logger;
+
+    public OrderPlacedConsumer(IDuplicateHandler duplicateHandler, IUnitOfWork unitOfWork,
+        ILogger<OrderPlacedConsumer> logger) : base(duplicateHandler,
+        unitOfWork)
+    {
+        _logger = logger;
+    }
+
+    protected override Task ConsumeAsync(ConsumeContext<OrderPlaced> context)
+    {
+        _logger.LogInformation($"Order '{context.Message.EventId}- Consumed");
+        return Task.CompletedTask;
+    }
+}
+ ```
