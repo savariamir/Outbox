@@ -66,10 +66,11 @@ Main issue in At-least-once is Duplication.
 
 # Message Processning
 
-- Idempotency
-    - f(f(x)) = f(x)
-    - Absolute value: |x|
-    - Delete in Sql
+Idempotency is a property of operations or API requests that ensures repeating the operation multiple times produces the same result as executing it once
+
+- f(f(x)) = f(x)
+- Absolute value: |x|
+- Delete in Sql
         
         ```sql
         Delete * From Customers Where Id = 1
