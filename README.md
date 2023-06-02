@@ -39,8 +39,6 @@ There's a well-known pattern called `Transactional Outbox` that can help you a
 
 ## Second problem
 
-![Consumer.png](./docs/Consumer.png)
-
 
 Message Bus needs the Acknowledge
 
