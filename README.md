@@ -9,7 +9,7 @@ A well-known example in that area is an `ordering` system: when a user wants to 
 
 ## First problem
 
-![event-handling-before-pattern.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e9a211b7-3cc3-48d9-a80a-7ca011d956a3/event-handling-before-pattern.png)
+![event-handling-before-pattern.png](./docs/event-handling-before-pattern.png)
 
 ```c#
  var order = new Order(options);
@@ -30,16 +30,17 @@ This approach works well until an error occurs between saving the order object a
 There's a well-known pattern called `Transactional Outbox` that can help you avoid these situations. It ensures events are saved in a datastore (typically in an Outbox table in your database) before they're ultimately pushed to a message broker. If the business object and the corresponding events are saved within the same database transaction, it's guaranteed that no data will be lost. Everything will be committed, or everything will roll back if there's an error. To eventually publish the event, a different service or worker process queries the Outbox table for unhandled entries, publishes the events, and marks them as processed. This pattern ensures events won't be lost after a business object is created or modified.
 
 
-![outbox.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6fb88e84-8fff-4b6b-9f8e-0c55766e630d/outbox.png)
+![outbox.png](./docs/outbox.png)
 
 
 ## Implementation
 
-![AzureComponents (1).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0716aa33-0b0f-403f-a321-08415861e6be/AzureComponents_(1).png)
+![high-level.png](./docs/high-level.png)
 
 ## Second problem
 
-![TransactionalOutbox (1)-WithoutOutbox.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9612bca2-8ff0-42bf-a41e-2a8e71258a99/TransactionalOutbox_(1)-WithoutOutbox.png)
+![Consumer.png](./docs/Consumer.png)
+
 
 Message Bus needs the Acknowledge
 

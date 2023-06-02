@@ -50,6 +50,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Subscriber", "src\Sub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anshan.Messaging", "Framework\Anshan.Messaging\Anshan.Messaging.csproj", "{EB00569B-00EF-4E77-9444-D0C586712EDD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8FF5B23E-39EF-4DF7-A128-4A92DEB2339F}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Consumer.png = docs\Consumer.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
