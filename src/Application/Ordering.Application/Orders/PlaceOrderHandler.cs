@@ -13,7 +13,8 @@ public class PlaceOrderHandler: ICommandHandler<PlaceOrderCommand>
         _repository = repository;
     }
 
-    public async Task HandleAsync(PlaceOrderCommand command, CancellationToken cancellationToken = new())
+    public async Task HandleAsync(PlaceOrderCommand command, 
+        CancellationToken cancellationToken = new())
     {
         var options = OrderFactory.CreateFrom(command);
 
