@@ -99,29 +99,22 @@ public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : Domai
 
     public async Task Consume(ConsumeContext<T> context)
     {
-       
-
-        try
+        if (!await _duplicateHandler.HasMessageProcessedBeforeAsync(context.Message.EventId))
         {
-            if (!await _duplicateHandler.HasMessageProcessedBeforeAsync(context.Message.EventId))
-            {
-               try
-               {
-                  await _unitOfWork.BeginAsync();
+           try
+           {
+              await _unitOfWork.BeginAsync();
 
-                  await ConsumeAsync(context);
-                  await _duplicateHandler.MarkMessageProcessed(context.Message.EventId);
+              await ConsumeAsync(context);
+              await _duplicateHandler.MarkMessageProcessed(context.Message.EventId);
 
-                  await _unitOfWork.CommitAsync();
-               }
-               catch (Exception exception)
-               {
-                   await _unitOfWork.RollbackAsync();
-                   throw new Exception(exception.Message, exception);
-               }
-            }
-
-           
+              await _unitOfWork.CommitAsync();
+           }
+           catch (Exception exception)
+           {
+               await _unitOfWork.RollbackAsync();
+               throw new Exception(exception.Message, exception);
+           }
         }
     }
 
