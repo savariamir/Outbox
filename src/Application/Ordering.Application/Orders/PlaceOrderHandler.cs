@@ -1,5 +1,4 @@
 ﻿using LiteBus.Commands.Abstractions;
-using Ordering.Application.Contracts;
 using Ordering.Application.Contracts.Orders;
 using Ordering.Domain.Models.Orders;
 
