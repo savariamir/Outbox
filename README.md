@@ -103,6 +103,7 @@ public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : Domai
               await _unitOfWork.BeginAsync();
 
               await ConsumeAsync(context);
+              
               await _duplicateHandler.MarkMessageProcessed(context.Message.EventId);
 
               await _unitOfWork.CommitAsync();
