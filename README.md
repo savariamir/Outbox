@@ -17,7 +17,8 @@ By employing messaging systems and event-driven architectures, microservice-base
 ![event-handling-before-pattern.png](./docs/event-handling-before-pattern.png)
 
 ```c#
-public async Task HandleAsync(PlaceOrderCommand command, CancellationToken cancellationToken = new())
+ public async Task HandleAsync(PlaceOrderCommand command, 
+        CancellationToken cancellationToken = new())
 {
      var options = OrderFactory.CreateFrom(command);
 
