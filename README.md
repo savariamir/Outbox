@@ -53,8 +53,6 @@ There's a well-known pattern called `Transactional Outbox` that can help you a
 ![Consumer.png](./docs/Consumer.png)
 
 
-Message Bus needs the Acknowledge
-
 ## Delivery Semantics
 
 - At-most-once (Potentially data lost and best performace)
