@@ -16,7 +16,7 @@ public class OrderTests : IClassFixture<WebApplicationFactory<Program>>
     }
     
     [Fact]
-    public void should_create_event()
+    public void should_place_order()
     {
         //Scenario
         this.Given(_ => _steps.UserWantsToPlaceTheOrder())
