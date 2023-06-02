@@ -71,10 +71,9 @@ Idempotency is a property of operations or API requests that ensures repeating t
 - f(f(x)) = f(x)
 - Absolute value: |x|
 - Delete in Sql
-        
-        ```sql
-        Delete * From Customers Where Id = 1
-        ```
+    ```sql
+      Delete * From Customers Where Id = 1
+    ```
         
 
 ### Idempotent Consumer
