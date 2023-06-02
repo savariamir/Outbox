@@ -12,11 +12,16 @@ A well-known example in that area is an `ordering` system: when a user wants to 
 ![event-handling-before-pattern.png](./docs/event-handling-before-pattern.png)
 
 ```c#
- var order = new Order(options);
-        
- await _repository.AddAsync(order);
+public async Task HandleAsync(PlaceOrderCommand command, CancellationToken cancellationToken = new())
+{
+     var options = OrderFactory.CreateFrom(command);
 
- await _publisher.PublishAsync(new OrderPlaced(options.Id));
+     var order = Order.PlaceOrder(options);
+
+     await _repository.AddAsync(order);
+     
+     await _publisher.PublishAsync(new OrderPlaced(options.Id));
+}
 ```
 
 This approach works well until an error occurs between saving the order object and publishing the corresponding event. Sending an event might fail at this point for many reasons:
