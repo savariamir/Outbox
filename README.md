@@ -118,12 +118,7 @@ public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : Domai
 }
 ```
 
-<<<<<<< HEAD
-
 ### Place Order example 
-=======
-## OrderPlacedConsumer Example
->>>>>>> c9bdd5f5e2a230284e7591362ed4224a3301af0f
 
 ```csharp
 public class OrderPlacedConsumer : IdempotentMessageHandler<OrderPlaced>
@@ -143,8 +138,4 @@ public class OrderPlacedConsumer : IdempotentMessageHandler<OrderPlaced>
         return Task.CompletedTask;
     }
 }
-<<<<<<< HEAD
 ```
-=======
- ```
->>>>>>> c9bdd5f5e2a230284e7591362ed4224a3301af0f
