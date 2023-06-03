@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Anshan.Domain\Anshan.Domain.csproj" />
+      <ProjectReference Include="..\Anshan.EF\Anshan.EF.csproj" />
       <ProjectReference Include="..\Anshan.Persistence\Anshan.Persistence.csproj" />
     </ItemGroup>
 

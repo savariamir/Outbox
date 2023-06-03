@@ -29,21 +29,16 @@ namespace Anshan.OutboxProcessor
 
         public async Task Invoke()
         {
-            await SubscribeForChanges();
-        }
-
-        private async Task SubscribeForChanges()
-        {
             var items = await _outboxRepository.GetOutboxItemsAsync();
             if (items.Any())
             {
-                _logger.LogInformation($"{items.Count} Events found in outbox");
-                ChangeDetected(items);
+                _logger.LogInformation("{ItemsCount} Events found in outbox", items.Count);
+                PublishOutboxMessages(items);
                 await _outboxRepository.UpdateOutboxItemsAsync(items);
             }
         }
-        
-        public void ChangeDetected(IEnumerable<OutboxItem> items)
+
+        private void PublishOutboxMessages(IEnumerable<OutboxItem> items)
         {
             foreach (var item in items)
             {
@@ -51,14 +46,15 @@ namespace Anshan.OutboxProcessor
 
                 if (type is null)
                 {
-                    _logger.LogError($"Type of '{item.EventType}' not found in event types");
+                    _logger.LogError("Type of \'{ItemEventType}\' not found in event types", item.EventType);
                     continue;
                 }
 
                 var eventToPublish = EventDeserializer.Deserialize(type, item.EventBody);
                 _publishEndpoint.Publish(eventToPublish);
 
-                _logger.LogInformation($"Event '{item.EventType}-{item.EventId}' Published on bus.");
+                _logger.LogInformation("Event \'{ItemEventType}-{ItemEventId}\' Published on bus",
+                    item.EventType, item.EventId);
             }
         }
     }

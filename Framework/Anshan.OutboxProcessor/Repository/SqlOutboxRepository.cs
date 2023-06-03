@@ -1,41 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
+using Anshan.EF;
 using Anshan.Persistence.Outbox;
-using Dapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Anshan.OutboxProcessor.Repository
 {
     public class SqlOutboxRepository : IOutboxRepository
     {
-        private readonly IDbConnection _connection;
+        private readonly CoreDbContext _context;
 
-        public SqlOutboxRepository(IDbConnection connection)
+        public SqlOutboxRepository(CoreDbContext context)
         {
-            _connection = connection;
+            _context = context;
         }
 
         public async Task UpdateOutboxItemsAsync(IEnumerable<OutboxItem> items)
         {
-            using var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             foreach (var item in items)
             {
-                await _connection.ExecuteAsync(
-                    "UPDATE OutboxMessages SET PublishDateTime = @PublishDateTime WHERE Id = @OutboxId",
-                    new { PublishDateTime = DateTime.UtcNow, OutboxId = item.Id });
+                item.PublishDateTime = DateTime.UtcNow;
+                _context.Update(item);
             }
 
-            transactionScope.Complete();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<OutboxItem>> GetOutboxItemsAsync()
         {
-            var items = await _connection.QueryAsync<OutboxItem>("SELECT TOP (100) *  FROM [dbo].[OutboxMessages] where PublishDateTime is NULL");
-
-            return items.ToList();
+            return await _context.OutboxMessages.Where(p => p.PublishDateTime == null).Take(100).ToListAsync();
         }
     }
 }

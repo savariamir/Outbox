@@ -21,12 +21,10 @@ namespace Order.Subscriber
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddConsumers(Configuration);
-            services.AddTransient<IDuplicateHandler, DuplicateHandler>();
+            services.AddTransient<IDuplicateHandler, DuplicationHandler>();
             services.AddDbContext<OrderingDBContext>(options =>
-                options.UseSqlServer(
-                    "Server=localhost;Database=OrderingDb;User=sa;Password=1O*ROdu2U9#S@i*3?HUd;Trusted_Connection=false;TrustServerCertificate=True;"));
+                options.UseSqlServer(Configuration.GetConnectionString("SqlConnectionString")));
             services.AddTransient<IUnitOfWork, EfUnitOfWork<OrderingDBContext>>();
-            
             services.AddTransient<IMessageConsumer<OrderPlaced>, OrderPlacedConsumer>();
         }
 

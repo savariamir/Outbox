@@ -1,8 +1,6 @@
 using Anshan.OutboxProcessor;
 using Anshan.Worker.Coravel;
 using Coravel;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 
 namespace Ordering.Worker;
 

@@ -13,8 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<OrderingDBContext>(options =>
-    options.UseSqlServer(
-        "Server=localhost;Database=OrderingDb;User=sa;Password=1O*ROdu2U9#S@i*3?HUd;Trusted_Connection=false;TrustServerCertificate=True;"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnectionString")));
 
 builder.Services.AddBus();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();

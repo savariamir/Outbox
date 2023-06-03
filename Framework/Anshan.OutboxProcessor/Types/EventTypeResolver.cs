@@ -21,7 +21,7 @@ namespace Anshan.OutboxProcessor.Types
 
         public Type GetType(string typeName)
         {
-            return _types.ContainsKey(typeName) ? _types[typeName] : null;
+            return _types.TryGetValue(typeName, out var type) ? type : null;
         }
     }
 }

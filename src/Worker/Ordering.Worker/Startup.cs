@@ -1,8 +1,10 @@
 using System.Data;
+using Anshan.EF;
 using Anshan.Messaging.Contracts;
 using Anshan.OutboxProcessor.Setup;
 using MassTransit;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ordering.Worker;
 
@@ -22,9 +24,8 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddScoped<IDbConnection>((sp) =>
-            new SqlConnection(
-                "Server=localhost;Database=OrderingDb;User=sa;Password=1O*ROdu2U9#S@i*3?HUd;Trusted_Connection=false;TrustServerCertificate=True;"));
+        services.AddDbContext<CoreDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("SqlConnectionString")));
         services.AddOutboxProcessor(Configuration, config =>
         {
             config.ReadFromSqlServer()
