@@ -1,7 +1,9 @@
 using Anshan.Core;
 using Anshan.EF;
+using Anshan.Messaging.Contracts;
 using Anshan.Messaging.IdempotentHandler;
 using Microsoft.EntityFrameworkCore;
+using Order.Subscriber.Consumers;
 using Ordering.Persistence.EF;
 
 namespace Order.Subscriber
@@ -24,6 +26,8 @@ namespace Order.Subscriber
                 options.UseSqlServer(
                     "Server=localhost;Database=OrderingDb;User=sa;Password=1O*ROdu2U9#S@i*3?HUd;Trusted_Connection=false;TrustServerCertificate=True;"));
             services.AddTransient<IUnitOfWork, EfUnitOfWork<OrderingDBContext>>();
+            
+            services.AddTransient<IMessageConsumer<OrderPlaced>, OrderPlacedConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

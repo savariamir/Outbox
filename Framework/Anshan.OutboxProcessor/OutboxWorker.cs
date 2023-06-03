@@ -32,6 +32,17 @@ namespace Anshan.OutboxProcessor
             await SubscribeForChanges();
         }
 
+        private async Task SubscribeForChanges()
+        {
+            var items = await _outboxRepository.GetOutboxItemsAsync();
+            if (items.Any())
+            {
+                _logger.LogInformation($"{items.Count} Events found in outbox");
+                ChangeDetected(items);
+                await _outboxRepository.UpdateOutboxItemsAsync(items);
+            }
+        }
+        
         public void ChangeDetected(IEnumerable<OutboxItem> items)
         {
             foreach (var item in items)
@@ -48,17 +59,6 @@ namespace Anshan.OutboxProcessor
                 _publishEndpoint.Publish(eventToPublish);
 
                 _logger.LogInformation($"Event '{item.EventType}-{item.EventId}' Published on bus.");
-            }
-        }
-
-        private async Task SubscribeForChanges()
-        {
-            var items = await _outboxRepository.GetOutboxItemsAsync();
-            if (items.Any())
-            {
-                _logger.LogInformation($"{items.Count} Events found in outbox");
-                ChangeDetected(items);
-                await _outboxRepository.UpdateOutboxItemsAsync(items);
             }
         }
     }

@@ -1,5 +1,6 @@
-﻿using MassTransit;
-using Order.Subscriber.Consumers;
+﻿using Anshan.Messaging.Contracts;
+using Anshan.Messaging.IdempotentHandler;
+using MassTransit;
 
 namespace Order.Subscriber;
 
@@ -9,7 +10,7 @@ public static class Configuration
     {
         services.AddMassTransit(mt =>
         {
-            mt.AddConsumer<OrderPlacedConsumer>();
+            mt.AddConsumer<IdempotentMessageHandler<OrderPlaced>>();
 
             mt.UsingAzureServiceBus((context, cfg) =>
             {
@@ -23,7 +24,7 @@ public static class Configuration
                     {
                         x.Incremental(5, TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5));
                     });
-                    ec.ConfigureConsumer<OrderPlacedConsumer>(context);
+                    ec.ConfigureConsumer<IdempotentMessageHandler<OrderPlaced>>(context);
                 });
             });
         });

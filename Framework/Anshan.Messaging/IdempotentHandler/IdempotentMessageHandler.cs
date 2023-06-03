@@ -1,18 +1,22 @@
 using Anshan.Core;
 using Anshan.Domain;
 using MassTransit;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Anshan.Messaging.IdempotentHandler;
 
-public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : DomainEvent
+public class IdempotentMessageHandler<T> : IMessageConsumer<T> where T : DomainEvent
 {
-    private readonly IDuplicateHandler _duplicateHandler;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IDuplicateHandler _duplicateHandler;
+    private readonly IServiceProvider _serviceProvider;
 
-    protected IdempotentMessageHandler(IDuplicateHandler duplicateHandler, IUnitOfWork unitOfWork)
+
+    public IdempotentMessageHandler(IUnitOfWork unitOfWork, IDuplicateHandler duplicateHandler, IServiceProvider serviceProvider)
     {
-        _duplicateHandler = duplicateHandler;
         _unitOfWork = unitOfWork;
+        _duplicateHandler = duplicateHandler;
+        _serviceProvider = serviceProvider;
     }
 
     public async Task Consume(ConsumeContext<T> context)
@@ -23,7 +27,13 @@ public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : Domai
         {
             if (!await _duplicateHandler.HasMessageProcessedBeforeAsync(context.Message.EventId))
             {
-                await ConsumeAsync(context);
+                var consumer = _serviceProvider.GetService<IMessageConsumer<T>>();
+
+                if (consumer is null)
+                    throw new ArgumentException($"There is no consumer for {typeof(T)}");
+                
+                await consumer.Consume(context);
+
                 await _duplicateHandler.MarkMessageProcessed(context.Message.EventId);
             }
 
@@ -35,6 +45,4 @@ public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : Domai
             throw new Exception(exception.Message, exception);
         }
     }
-
-    protected abstract Task ConsumeAsync(ConsumeContext<T> context);
 }

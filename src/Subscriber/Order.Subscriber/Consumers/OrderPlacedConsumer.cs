@@ -1,24 +1,23 @@
-using Anshan.Core;
 using Anshan.Messaging.Contracts;
 using Anshan.Messaging.IdempotentHandler;
 using MassTransit;
 
 namespace Order.Subscriber.Consumers;
 
-public class OrderPlacedConsumer : IdempotentMessageHandler<OrderPlaced>
+public class OrderPlacedConsumer : IMessageConsumer<OrderPlaced>
 {
     private readonly ILogger<OrderPlacedConsumer> _logger;
 
-    public OrderPlacedConsumer(IDuplicateHandler duplicateHandler, IUnitOfWork unitOfWork,
-        ILogger<OrderPlacedConsumer> logger) : base(duplicateHandler,
-        unitOfWork)
+    public OrderPlacedConsumer(ILogger<OrderPlacedConsumer> logger)
     {
         _logger = logger;
     }
 
-    protected override Task ConsumeAsync(ConsumeContext<OrderPlaced> context)
+    public Task Consume(ConsumeContext<OrderPlaced> context)
     {
         _logger.LogInformation($"Order '{context.Message.EventId}- Consumed");
         return Task.CompletedTask;
     }
 }
+    
+
