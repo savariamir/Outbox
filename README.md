@@ -81,58 +81,62 @@ Idempotency is a property of operations or API requests that ensures repeating t
 ## Expilict De-duplication With AOP (Aspect Oriented Programming) Solution
 
 ```csharp
-public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : DomainEvent
+public class IdempotentMessageHandler<T> : IMessageConsumer<T> where T : DomainEvent
 {
-    private readonly IDuplicateHandler _duplicateHandler;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IDuplicateHandler _duplicateHandler;
+    private readonly IServiceProvider _serviceProvider;
 
-    protected IdempotentMessageHandler(IDuplicateHandler duplicateHandler, IUnitOfWork unitOfWork)
+
+    public IdempotentMessageHandler(IUnitOfWork unitOfWork, IDuplicateHandler duplicateHandler, IServiceProvider serviceProvider)
     {
-        _duplicateHandler = duplicateHandler;
         _unitOfWork = unitOfWork;
+        _duplicateHandler = duplicateHandler;
+        _serviceProvider = serviceProvider;
     }
 
     public async Task Consume(ConsumeContext<T> context)
     {
-        if (!await _duplicateHandler.HasMessageProcessedBeforeAsync(context.Message.EventId))
+        await _unitOfWork.BeginAsync();
+
+        try
         {
-           try
-           {
-              await _unitOfWork.BeginAsync();
+            if (!await _duplicateHandler.HasMessageProcessedBeforeAsync(context.Message.EventId))
+            {
+                var consumer = _serviceProvider.GetService<IMessageConsumer<T>>();
 
-              await ConsumeAsync(context);
-              
-              await _duplicateHandler.MarkMessageProcessed(context.Message.EventId);
+                if (consumer is null)
+                    throw new ArgumentException($"There is no consumer for {typeof(T)}");
+                
+                await consumer.Consume(context);
 
-              await _unitOfWork.CommitAsync();
-           }
-           catch (Exception exception)
-           {
-               await _unitOfWork.RollbackAsync();
-               throw new Exception(exception.Message, exception);
-           }
+                await _duplicateHandler.MarkMessageProcessed(context.Message.EventId);
+            }
+
+            await _unitOfWork.CommitAsync();
+        }
+        catch (Exception exception)
+        {
+            await _unitOfWork.RollbackAsync();
+            throw new Exception(exception.Message, exception);
         }
     }
-
-    protected abstract Task ConsumeAsync(ConsumeContext<T> context);
 }
 ```
 
 ### Place Order example 
 
 ```csharp
-public class OrderPlacedConsumer : IdempotentMessageHandler<OrderPlaced>
+public class OrderPlacedConsumer : IMessageConsumer<OrderPlaced>
 {
     private readonly ILogger<OrderPlacedConsumer> _logger;
 
-    public OrderPlacedConsumer(IDuplicateHandler duplicateHandler, IUnitOfWork unitOfWork,
-        ILogger<OrderPlacedConsumer> logger) : base(duplicateHandler,
-        unitOfWork)
+    public OrderPlacedConsumer(ILogger<OrderPlacedConsumer> logger)
     {
         _logger = logger;
     }
 
-    protected override Task ConsumeAsync(ConsumeContext<OrderPlaced> context)
+    public Task Consume(ConsumeContext<OrderPlaced> context)
     {
         _logger.LogInformation($"Order '{context.Message.EventId}- Consumed");
         return Task.CompletedTask;
