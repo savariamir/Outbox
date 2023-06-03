@@ -46,11 +46,9 @@ There's a well-known pattern called `Transactional Outbox` that can help you a
 
 ## Implementation
 
-![high-level.png](./docs/high-level.png)
+![high-level.png | width=100](./docs/high-level.png)
 
 ## Second problem
-
-![Consumer.png](./docs/Consumer.png)
 
 
 ## Delivery Semantics
@@ -120,8 +118,12 @@ public abstract class IdempotentMessageHandler<T> : IConsumer<T> where T : Domai
 }
 ```
 
+<<<<<<< HEAD
 
 ### Place Order example 
+=======
+## OrderPlacedConsumer Example
+>>>>>>> c9bdd5f5e2a230284e7591362ed4224a3301af0f
 
 ```csharp
 public class OrderPlacedConsumer : IdempotentMessageHandler<OrderPlaced>
@@ -141,4 +143,8 @@ public class OrderPlacedConsumer : IdempotentMessageHandler<OrderPlaced>
         return Task.CompletedTask;
     }
 }
+<<<<<<< HEAD
 ```
+=======
+ ```
+>>>>>>> c9bdd5f5e2a230284e7591362ed4224a3301af0f
