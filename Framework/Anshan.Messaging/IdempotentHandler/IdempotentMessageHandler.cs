@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Anshan.Messaging.IdempotentHandler;
 
-public class IdempotentMessageHandler<T> : IMessageConsumer<T> where T : DomainEvent
+public class IdempotentMessageHandler<T> : IConsumer<T> where T : DomainEvent
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IDuplicateHandler _duplicateHandler;

@@ -3,6 +3,7 @@ using MassTransit;
 
 namespace Anshan.Messaging.IdempotentHandler;
 
-public interface IMessageConsumer<in T> : IConsumer<T> where T : DomainEvent
+public interface IMessageConsumer<in T> where T : DomainEvent
 {
+    Task Consume(ConsumeContext<T> context);
 }
