@@ -62,6 +62,11 @@ Main issue in At-least-once is Duplication.
 
 # Message Processning
 
+Idempotent Receiver
+
+Even when a sender application only sends a message once, the receiver application may receive
+the message more than once.
+
 Idempotency is a property of operations or API requests that ensures repeating the operation multiple times produces the same result as executing it once
 
 - f(f(x)) = f(x)

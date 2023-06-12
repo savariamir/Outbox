@@ -18,8 +18,10 @@ namespace Anshan.OutboxProcessor
         private readonly IOutboxRepository _outboxRepository;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public OutboxWorker(IEventTypeResolver typeResolver, ILogger<OutboxWorker> logger,
-            IOutboxRepository outboxRepository, IPublishEndpoint publishEndpoint)
+        public OutboxWorker(IEventTypeResolver typeResolver,
+            ILogger<OutboxWorker> logger,
+            IOutboxRepository outboxRepository, 
+            IPublishEndpoint publishEndpoint)
         {
             _typeResolver = typeResolver;
             _logger = logger;

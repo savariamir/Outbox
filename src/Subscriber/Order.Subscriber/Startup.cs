@@ -20,7 +20,7 @@ namespace Order.Subscriber
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddConsumers(Configuration);
+            services.AddMassTransit(Configuration);
             services.AddTransient<IDuplicateHandler, DuplicationHandler>();
             services.AddDbContext<OrderingDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SqlConnectionString")));

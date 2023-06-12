@@ -6,7 +6,7 @@ namespace Order.Subscriber;
 
 public static class Configuration
 {
-    public static IServiceCollection AddConsumers(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMassTransit(mt =>
         {
